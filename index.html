@@ -341,10 +341,16 @@
       `).join('');
     }
 
-    function addToCart(id) {
-      cart[id] = (cart[id] || 0) + 1;
-      renderCart();
-    }
+function addToCart(id) {
+  cart[id] = (cart[id] || 0) + 1;
+
+  // GA4事件
+  gtag('event', 'add_to_cart', {
+    item_id: id
+  });
+
+  renderCart();
+}
 
     function decreaseQty(id) {
       if (!cart[id]) return;
@@ -353,10 +359,15 @@
       renderCart();
     }
 
-    function removeItem(id) {
-      delete cart[id];
-      renderCart();
-    }
+function removeItem(id) {
+  delete cart[id];
+
+  gtag('event', 'remove_from_cart', {
+    item_id: id
+  });
+
+  renderCart();
+}
 
     function openModal(id) {
       selectedProduct = products.find(p => p.id === id);
@@ -383,6 +394,8 @@
       }
     });
     document.getElementById('begin-checkout').addEventListener('click', function() {
+        // GA4事件
+  gtag('event', 'begin_checkout');
       const totalQty = products.filter(p => cart[p.id] > 0).reduce((sum, p) => sum + cart[p.id], 0);
       const totalAmount = products.filter(p => cart[p.id] > 0).reduce((sum, p) => sum + cart[p.id] * p.price, 0);
       alert(`Checkout started. Items: ${totalQty}, Total: ${money(totalAmount)}`);
