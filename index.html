@@ -1,27 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-KR9YL1TPQ9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KR9YL1TPQ9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-KR9YL1TPQ9');
-</script>
+    // 默认配置
+    gtag('config', 'G-KR9YL1TPQ9', {
+      'debug_mode': true // 强制开启调试模式，方便在 GA4 DebugView 中实时查看
+    });
+  </script>
   
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GA4 Tracking Test Store</title>
+  <title>GA4 Professional Tracking Test Store</title>
   <style>
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f5f7fb;
       color: #1f2937;
+      line-height: 1.5;
     }
     .container {
       max-width: 1200px;
@@ -33,33 +35,38 @@
       justify-content: space-between;
       align-items: center;
       gap: 20px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 20px;
     }
-    h1 { margin: 0 0 8px; }
-    .subtitle { color: #6b7280; margin: 0; }
+    h1 { margin: 0 0 8px; color: #111827; }
+    .subtitle { color: #6b7280; margin: 0; max-width: 600px; }
     .cart-summary {
       background: white;
       border: 1px solid #e5e7eb;
       border-radius: 12px;
       padding: 12px 16px;
-      min-width: 180px;
+      min-width: 200px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .layout {
       display: grid;
       grid-template-columns: 2fr 1fr;
-      gap: 24px;
+      gap: 32px;
     }
     .products {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 24px;
     }
     .card, .cart-box {
       background: white;
       border-radius: 16px;
       border: 1px solid #e5e7eb;
       overflow: hidden;
+      transition: transform 0.2s;
     }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
     .card img {
       width: 100%;
       height: 220px;
@@ -67,59 +74,70 @@
       display: block;
       cursor: pointer;
     }
-    .card-body { padding: 16px; }
+    .card-body { padding: 20px; }
     .category {
-      font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #3b82f6;
+      font-weight: bold;
+      margin-bottom: 8px;
     }
     .product-title {
       font-size: 20px;
-      font-weight: bold;
+      font-weight: 800;
       margin: 0 0 10px;
       cursor: pointer;
+      color: #111827;
     }
     .price {
+      font-size: 18px;
       font-weight: bold;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
+      color: #059669;
     }
     .desc {
       color: #4b5563;
       font-size: 14px;
       min-height: 42px;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
     }
     .btn-row {
       display: flex;
-      gap: 10px;
+      gap: 12px;
     }
     button {
       border: none;
-      border-radius: 10px;
-      padding: 10px 14px;
+      border-radius: 8px;
+      padding: 10px 16px;
       cursor: pointer;
       font-size: 14px;
+      font-weight: 600;
+      transition: all 0.2s;
     }
     .btn-outline {
       background: white;
       border: 1px solid #d1d5db;
+      color: #374151;
     }
+    .btn-outline:hover { background: #f9fafb; border-color: #9ca3af; }
     .btn-primary {
-      background: #111827;
+      background: #2563eb;
       color: white;
     }
+    .btn-primary:hover { background: #1d4ed8; }
     .cart-box {
-      padding: 18px;
+      padding: 24px;
       height: fit-content;
       position: sticky;
-      top: 20px;
+      top: 24px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
     }
     .cart-item {
-      border: 1px solid #e5e7eb;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 12px;
+      border-bottom: 1px solid #f3f4f6;
+      padding: 16px 0;
     }
+    .cart-item:last-child { border-bottom: none; }
     .cart-top {
       display: flex;
       justify-content: space-between;
@@ -130,7 +148,7 @@
     .qty-controls {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 12px;
     }
     .qty-number {
       min-width: 24px;
@@ -138,60 +156,55 @@
       font-weight: bold;
     }
     .totals {
-      background: #f3f4f6;
+      background: #f8fafc;
       border-radius: 12px;
-      padding: 14px;
-      margin-top: 16px;
+      padding: 20px;
+      margin-top: 20px;
     }
     .totals div {
       display: flex;
       justify-content: space-between;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
-    .totals div:last-child { margin-bottom: 0; font-weight: bold; }
+    .totals div:last-child { margin-bottom: 0; font-size: 18px; font-weight: 800; color: #111827; }
     .checkout {
       width: 100%;
-      margin-top: 14px;
-      padding: 14px;
+      margin-top: 20px;
+      padding: 16px;
       font-size: 16px;
+      background: #059669;
     }
+    .checkout:hover { background: #047857; }
     .empty {
-      border: 1px dashed #d1d5db;
-      border-radius: 12px;
-      padding: 18px;
+      padding: 32px;
       text-align: center;
-      color: #6b7280;
+      color: #9ca3af;
+      font-style: italic;
     }
+    /* Modal Styles */
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.7);
       align-items: center;
       justify-content: center;
       padding: 20px;
+      z-index: 100;
     }
     .modal-content {
       background: white;
       width: 100%;
       max-width: 800px;
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
       display: grid;
-      grid-template-columns: 1.1fr 1fr;
+      grid-template-columns: 1fr 1fr;
     }
-    .modal-content img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .modal-body { padding: 20px; }
-    .close-btn {
-      background: #ef4444;
-      color: white;
-      margin-top: 12px;
-    }
+    .modal-content img { width: 100%; height: 100%; object-fit: cover; }
+    .modal-body { padding: 32px; }
+    .close-btn { background: #ef4444; color: white; margin-top: 16px; width: 100%; }
+
     @media (max-width: 900px) {
       .layout { grid-template-columns: 1fr; }
       .products { grid-template-columns: 1fr; }
@@ -203,26 +216,26 @@
   <div class="container">
     <header>
       <div>
-        <h1>RICHARD YANG GA4 Tracking Test Store</h1>
-        <p class="subtitle">Richard Yang ecommerce page for testing GA4 product clicks, add to cart, cart updates, and checkout.</p>
+        <h1>RICHARD YANG GA4 Test Store</h1>
+        <p class="subtitle">专业的 GA4 电商埋点审计测试环境。支持 view_item, add_to_cart, begin_checkout 和 purchase 事件。</p>
       </div>
       <div class="cart-summary" id="cart-summary">
-        <div><strong>Cart</strong></div>
-        <div id="cart-summary-text">0 items · $0</div>
+        <div style="font-size: 12px; color: #6b7280;">Shopping Cart</div>
+        <div id="cart-summary-text" style="font-weight: bold; font-size: 16px;">0 items · $0</div>
       </div>
     </header>
 
     <div class="layout">
       <section>
-        <h2>Featured Products</h2>
+        <h2 style="margin-top: 0;">Featured Products</h2>
         <div class="products" id="product-list"></div>
       </section>
 
       <aside class="cart-box">
-        <h2>Shopping Cart</h2>
+        <h2 style="margin-top: 0;">Your Cart</h2>
         <div id="cart-items"></div>
         <div class="totals">
-          <div><span>Total Quantity</span><span id="total-qty">0</span></div>
+          <div><span>Items Count</span><span id="total-qty">0</span></div>
           <div><span>Total Amount</span><span id="total-amount">$0</span></div>
         </div>
         <button class="btn-primary checkout" id="begin-checkout">Proceed to Checkout</button>
@@ -234,77 +247,50 @@
     <div class="modal-content">
       <img id="modal-image" src="" alt="product image" />
       <div class="modal-body">
-        <h2 id="modal-title"></h2>
-        <p id="modal-price"></p>
-        <p id="modal-desc"></p>
-        <button class="btn-primary" id="modal-add-to-cart">Add to Cart</button>
-        <button class="close-btn" id="close-modal">Close</button>
+        <div id="modal-category" class="category"></div>
+        <h2 id="modal-title" style="margin: 8px 0;"></h2>
+        <p id="modal-price" class="price"></p>
+        <p id="modal-desc" class="desc"></p>
+        <button class="btn-primary" id="modal-add-to-cart" style="width: 100%; margin-bottom: 10px; padding: 14px;">Add to Cart</button>
+        <button class="btn-outline" id="close-modal" style="width: 100%;">Back to Shop</button>
       </div>
     </div>
   </div>
 
   <script>
     const products = [
-      {
-        id: 'sku-wireless-headphones',
-        name: 'Wireless Headphones',
-        category: 'Electronics',
-        price: 89,
-        description: 'Noise reduction, Bluetooth 5.3, and up to 28 hours of battery life for daily commuting and focused work.',
-        image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        id: 'sku-smart-watch',
-        name: 'Smart Watch',
-        category: 'Wearables',
-        price: 129,
-        description: 'Track your steps, heart rate, sleep, and notifications with a lightweight everyday smart watch.',
-        image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        id: 'sku-mechanical-keyboard',
-        name: 'Mechanical Keyboard',
-        category: 'Accessories',
-        price: 109,
-        description: 'Compact 75% layout with hot-swappable switches, RGB backlight, and satisfying tactile feedback.',
-        image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=1200&q=80'
-      },
-      {
-        id: 'sku-coffee-maker',
-        name: 'Coffee Maker',
-        category: 'Home',
-        price: 149,
-        description: 'Fast-brew countertop coffee maker with timer presets and a thermal carafe for busy mornings.',
-        image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80'
-      }
+      { id: 'SKU_123', name: 'Wireless Headphones', category: 'Electronics', price: 89, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80', description: 'Premium noise-cancelling headphones.' },
+      { id: 'SKU_456', name: 'Smart Watch', category: 'Wearables', price: 129, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80', description: 'Advanced fitness tracking and notifications.' },
+      { id: 'SKU_789', name: 'Mechanical Keyboard', category: 'Accessories', price: 109, image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=800&q=80', description: 'Tactile switches for the best typing experience.' },
+      { id: 'SKU_000', name: 'Coffee Maker', category: 'Home', price: 149, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80', description: 'Brew the perfect cup every morning.' }
     ];
 
-    const cart = {};
+    let cart = {};
     let selectedProduct = null;
 
-    function money(n) {
-      return '$' + n;
-    }
+    // 工具函数：格式化货币
+    const money = (n) => '$' + n;
 
+    // 核心函数：渲染产品列表
     function renderProducts() {
       const list = document.getElementById('product-list');
-      list.innerHTML = products.map(product => `
-        <div class="card" id="product-card-${product.id}">
-          <img src="${product.image}" alt="${product.name}" onclick="openModal('${product.id}')">
+      list.innerHTML = products.map(p => `
+        <div class="card">
+          <img src="${p.image}" alt="${p.name}" onclick="openModal('${p.id}')">
           <div class="card-body">
-            <div class="category">${product.category}</div>
-            <div class="product-title" onclick="openModal('${product.id}')">${product.name}</div>
-            <div class="price">${money(product.price)}</div>
-            <div class="desc">${product.description}</div>
+            <div class="category">${p.category}</div>
+            <div class="product-title" onclick="openModal('${p.id}')">${p.name}</div>
+            <div class="price">${money(p.price)}</div>
             <div class="btn-row">
-              <button class="btn-outline" onclick="openModal('${product.id}')">View Details</button>
-              <button class="btn-primary" onclick="addToCart('${product.id}')">Add to Cart</button>
+              <button class="btn-outline" onclick="openModal('${p.id}')">View Details</button>
+              <button class="btn-primary" onclick="addToCart('${p.id}')">Add to Cart</button>
             </div>
           </div>
         </div>
       `).join('');
     }
 
+    // 核心函数：渲染购物车
     function renderCart() {
       const cartItems = products.filter(p => cart[p.id] > 0);
       const container = document.getElementById('cart-items');
@@ -316,7 +302,7 @@
       document.getElementById('cart-summary-text').textContent = `${totalQty} items · ${money(totalAmount)}`;
 
       if (cartItems.length === 0) {
-        container.innerHTML = '<div class="empty">Your cart is empty. Add products to test cart and checkout events.</div>';
+        container.innerHTML = '<div class="empty">Your cart is empty.</div>';
         return;
       }
 
@@ -324,33 +310,90 @@
         <div class="cart-item">
           <div class="cart-top">
             <div>
-              <div><strong>${item.name}</strong></div>
-              <div>${money(item.price)} each</div>
+              <div style="font-weight:bold">${item.name}</div>
+              <div style="font-size:12px; color:#6b7280">${money(item.price)} each</div>
             </div>
-            <button class="btn-outline" onclick="removeItem('${item.id}')">Remove</button>
+            <button class="btn-outline" style="padding:4px 8px; font-size:12px; color:#ef4444" onclick="removeItem('${item.id}')">Remove</button>
           </div>
           <div class="cart-top">
             <div class="qty-controls">
-              <button class="btn-outline" onclick="decreaseQty('${item.id}')">-</button>
+              <button class="btn-outline" style="padding:2px 8px" onclick="decreaseQty('${item.id}')">-</button>
               <span class="qty-number">${cart[item.id]}</span>
-              <button class="btn-outline" onclick="addToCart('${item.id}')">+</button>
+              <button class="btn-outline" style="padding:2px 8px" onclick="addToCart('${item.id}')">+</button>
             </div>
-            <div><strong>${money(cart[item.id] * item.price)}</strong></div>
+            <div style="font-weight:bold">${money(cart[item.id] * item.price)}</div>
           </div>
         </div>
       `).join('');
     }
 
-function addToCart(id) {
-  cart[id] = (cart[id] || 0) + 1;
+    // --- GA4 事件逻辑 ---
 
-  // GA4事件
-  gtag('event', 'add_to_cart', {
-    item_id: id
-  });
+    // 1. View Item (查看详情)
+    function openModal(id) {
+      selectedProduct = products.find(p => p.id === id);
+      document.getElementById('modal-image').src = selectedProduct.image;
+      document.getElementById('modal-title').textContent = selectedProduct.name;
+      document.getElementById('modal-category').textContent = selectedProduct.category;
+      document.getElementById('modal-price').textContent = money(selectedProduct.price);
+      document.getElementById('modal-desc').textContent = selectedProduct.description;
+      document.getElementById('product-modal').style.display = 'flex';
 
-  renderCart();
-}
+      // 发送 GA4 view_item 事件
+      gtag("event", "view_item", {
+        currency: "USD",
+        value: selectedProduct.price,
+        items: [{
+          item_id: selectedProduct.id,
+          item_name: selectedProduct.name,
+          item_category: selectedProduct.category,
+          price: selectedProduct.price,
+          quantity: 1
+        }]
+      });
+    }
+
+    // 2. Add to Cart (加入购物车)
+    function addToCart(id) {
+      const p = products.find(product => product.id === id);
+      cart[id] = (cart[id] || 0) + 1;
+
+      // 发送 GA4 add_to_cart 事件
+      gtag("event", "add_to_cart", {
+        currency: "USD",
+        value: p.price,
+        items: [{
+          item_id: p.id,
+          item_name: p.name,
+          item_category: p.category,
+          price: p.price,
+          quantity: 1
+        }]
+      });
+
+      renderCart();
+    }
+
+    // 3. Remove from Cart (移除商品)
+    function removeItem(id) {
+      const p = products.find(product => product.id === id);
+      const qty = cart[id];
+      delete cart[id];
+
+      // 发送 GA4 remove_from_cart 事件
+      gtag("event", "remove_from_cart", {
+        currency: "USD",
+        value: p.price * qty,
+        items: [{
+          item_id: p.id,
+          item_name: p.name,
+          price: p.price,
+          quantity: qty
+        }]
+      });
+
+      renderCart();
+    }
 
     function decreaseQty(id) {
       if (!cart[id]) return;
@@ -359,51 +402,57 @@ function addToCart(id) {
       renderCart();
     }
 
-function removeItem(id) {
-  delete cart[id];
-
-  gtag('event', 'remove_from_cart', {
-    item_id: id
-  });
-
-  renderCart();
-}
-
-    function openModal(id) {
-      selectedProduct = products.find(p => p.id === id);
-      document.getElementById('modal-image').src = selectedProduct.image;
-      document.getElementById('modal-title').textContent = selectedProduct.name;
-      document.getElementById('modal-price').textContent = money(selectedProduct.price);
-      document.getElementById('modal-desc').textContent = selectedProduct.description;
-      document.getElementById('product-modal').style.display = 'flex';
-    }
-
     function closeModal() {
       document.getElementById('product-modal').style.display = 'none';
       selectedProduct = null;
     }
 
-    document.getElementById('close-modal').addEventListener('click', closeModal);
-    document.getElementById('product-modal').addEventListener('click', function(e) {
-      if (e.target.id === 'product-modal') closeModal();
-    });
-    document.getElementById('modal-add-to-cart').addEventListener('click', function() {
-      if (selectedProduct) {
-        addToCart(selectedProduct.id);
-        closeModal();
-      }
-    });
+    // 4. Begin Checkout & Purchase (模拟全流程)
     document.getElementById('begin-checkout').addEventListener('click', function() {
-        // GA4事件
-  gtag('event', 'begin_checkout');
-      const totalQty = products.filter(p => cart[p.id] > 0).reduce((sum, p) => sum + cart[p.id], 0);
-      const totalAmount = products.filter(p => cart[p.id] > 0).reduce((sum, p) => sum + cart[p.id] * p.price, 0);
-      alert(`Checkout started. Items: ${totalQty}, Total: ${money(totalAmount)}`);
+      const cartItems = products.filter(p => cart[p.id] > 0).map(p => ({
+        item_id: p.id,
+        item_name: p.name,
+        item_category: p.category,
+        price: p.price,
+        quantity: cart[p.id]
+      }));
+
+      if (cartItems.length === 0) return alert("Cart is empty!");
+
+      const totalVal = cartItems.reduce((s, i) => s + (i.price * i.quantity), 0);
+
+      // 发送 GA4 begin_checkout 事件
+      gtag("event", "begin_checkout", {
+        currency: "USD",
+        value: totalVal,
+        items: cartItems
+      });
+
+      // 模拟购买成功 - 这是一个分析师最爱的演示环节
+      setTimeout(() => {
+        const transactionID = 'T_' + Math.floor(Math.random() * 1000000);
+        
+        gtag("event", "purchase", {
+          transaction_id: transactionID,
+          value: totalVal,
+          currency: "USD",
+          items: cartItems
+        });
+
+        alert(`Success! Purchase Event Sent.\nTransaction ID: ${transactionID}\nTotal: $${totalVal}`);
+        cart = {}; // 清空购物车
+        renderCart();
+      }, 500);
     });
 
+    // UI 事件绑定
+    document.getElementById('close-modal').addEventListener('click', closeModal);
+    document.getElementById('product-modal').addEventListener('click', (e) => { if (e.target.id === 'product-modal') closeModal(); });
+    document.getElementById('modal-add-to-cart').addEventListener('click', () => { if (selectedProduct) { addToCart(selectedProduct.id); closeModal(); } });
+
+    // 初始化页面
     renderProducts();
     renderCart();
   </script>
 </body>
 </html>
-<!-- test deploy -->
